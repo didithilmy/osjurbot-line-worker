@@ -19,15 +19,16 @@ $channel->queue_declare("osjurbot-line-queue", false, true, false, false);
 echo " [*] Waiting for messages. To exit press CTRL+C\n";
 
 $callback = function ($msg) {
-    echo ' [x] Received ', $msg->body, "\n";
-    // Sending messages
     $msgs = json_decode($msg->body);
 
+    echo ' [x] Received ', count($msgs), " messages to sent\n";
+
+    // Sending messages
     foreach($msgs as $message) {
         $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(LINEBOT_CHANNEL_TOKEN);
         $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => LINEBOT_CHANNEL_SECRET]);
 
-        echo "Sending message to ".$message->mid."...";
+        echo "[*] Sending message to ".$message->mid."...\n";
         $bot->pushMessage($message->mid, new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message->txt));
     }
 };
