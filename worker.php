@@ -28,7 +28,7 @@ $callback = function ($msg) {
         $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(LINEBOT_CHANNEL_TOKEN);
         $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => LINEBOT_CHANNEL_SECRET]);
 
-        echo "[*] Sending message to ".$message->mid."...\n";
+        echo " [>] Sending message to ".$message->mid."...\n";
         $bot->pushMessage($message->mid, new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message->txt));
     }
 };
